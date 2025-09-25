@@ -1,0 +1,4 @@
+[tool.pytest.ini_options]
+addopts = "--cov=app --cov=models --cov=weather_api --cov-report=term-missing --cov-report=xml:coverage.xml --cov-report=html:htmlcov"
+testpaths = ["tests"]
+pythonpath = ["weather_app", "."]

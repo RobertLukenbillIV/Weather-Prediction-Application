@@ -1,0 +1,48 @@
+{% extends "_layout.html" %}
+{% block content %}
+<section class="form-section">
+  <h2>Choose a location</h2>
+  <p>Multiple places match your search. Pick the correct one:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>City</th>
+          <th>Region/State</th>
+          <th>Country</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>Timezone</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in candidates %}
+        <tr>
+          <td>{{ c.name }}</td>
+          <td>{{ c.admin1 or "—" }}</td>
+          <td>{{ c.country }}</td>
+          <td>{{ "%.4f"|format(c.latitude) }}</td>
+          <td>{{ "%.4f"|format(c.longitude) }}</td>
+          <td>{{ c.timezone }}</td>
+          <td>
+            <form method="post" action="{{ url_for('add') }}">
+              <input type="hidden" name="requested_date" value="{{ requested_date }}">
+              <input type="hidden" name="country" value="{{ country }}">
+              <input type="hidden" name="city" value="{{ city }}">
+              <input type="hidden" name="lat" value="{{ c.latitude }}">
+              <input type="hidden" name="lon" value="{{ c.longitude }}">
+              <input type="hidden" name="timezone" value="{{ c.timezone }}">
+              <button type="submit">Select</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <p class="hint">Tip: Next time, include the State/Province to skip this step.</p>
+</section>
+{% endblock %}

@@ -1,1 +1,48 @@
+# Python bytecode / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
 .env
+.env.*
+.flaskenv
+.venv/
+venv/
+env/
+pip-wheel-metadata/
+
+# Test/coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Build & packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Tool caches
+.mypy_cache/
+.pytype/
+.tox/
+.cache/
+
+# Flask app runtime (if used)
+instance/
+*.db
+*.sqlite3
+*.sqlite
+
+# Editors/OS
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/

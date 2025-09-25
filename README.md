@@ -1,24 +1,34 @@
-# General Overview
-This project is dedicated to creating a weather prediction application utilizing Python for both front-end and back-end, using Python's Discord.py library for the user UI, and initially integrating both WeatherAPI for live weather statistics and Railway for remotely running the application and database information management.
+# Weather Database (Flask + SQLite + Open-Meteo)
 
-# Project Requirements
-- User can make a request for live weather data giving the application the necessary location information (country, region, etc.)
-- User can make a request for weather prediction of a certain date in the future based on historical data patterns for a specific defined location by the user (country, region, etc.)
-- User can make a request for weather prediction for a series of days in a row within the future based on historical data patterns for a specific defined location by the user (country, region, etc.)
-- User can pull from database all past information requested to the application.
-- User can request all data from the database be transfered into a downloaded Excel document.
-- User can request statistical probabilities for types of weather to occurr duirng a date or series of dates set for a specific location.
-# Project APIs, Languages, and Software
-## Python
+A tiny full-stack Python project: enter a **date, country, city** (optionally **state/province**), fetch weather (historical / forecast) via **Open-Meteo**, and store in local **SQLite**. Web UI shows sortable rows, add/delete, and disambiguation for duplicate city names.
 
-### Discord Library
-## WeatherAPI
-## Railway
+## Quickstart
+```bash
+python -m venv .venv
+source .venv/bin/activate      # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+flask --app app:create_app run --debug    # or: python app.py
+```
+Open http://127.0.0.1:5000/
 
-# Project Structure
-## Project Back-End
-### Database Integration
-### 
-## Project Front-End
-### User Functionality
-### 
+## Disambiguation with State/Province
+Fill the optional **State/Province** field to narrow geocoding results. If multiple results remain, you’ll choose from a table.
+
+## Testing
+- Install dev deps: `pip install -r requirements-dev.txt`
+- Run tests: `pytest -q`
+
+### Coverage reports
+Pytest is configured to generate coverage:
+- terminal summary (missing lines)
+- HTML at **htmlcov/index.html**
+- XML at **coverage.xml**
+
+## CI (GitHub Actions)
+A workflow at `.github/workflows/ci.yml` runs tests with coverage on pushes/PRs to `main` and uploads HTML/XML coverage artifacts.
+
+## Extending Ideas
+- Store region in DB (add column)
+- Pagination / CSV export
+- More metrics (humidity, clouds)
+- Auth (Flask-Login)

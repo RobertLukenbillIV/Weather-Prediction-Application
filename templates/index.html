@@ -1,0 +1,68 @@
+{% extends "_layout.html" %}
+{% block content %}
+<section class="form-section">
+  <h2>Add Weather by Date & Location</h2>
+  <form method="post" action="{{ url_for('add') }}" class="grid-form">
+    <div>
+      <label for="requested_date">Date</label>
+      <input type="date" id="requested_date" name="requested_date" required>
+    </div>
+    <div>
+      <label for="country">Country</label>
+      <input type="text" id="country" name="country" placeholder="e.g., United States" required>
+    </div>
+    <div>
+      <label for="city">City</label>
+      <input type="text" id="city" name="city" placeholder="e.g., Springfield" required>
+    </div>
+    <div>
+      <label for="region">State/Province (optional)</label>
+      <input type="text" id="region" name="region" placeholder="e.g., Illinois / Ontario">
+    </div>
+    <button type="submit">Fetch & Save</button>
+  </form>
+  <p class="hint">Tip: Fill State/Province to narrow down duplicate city names.</p>
+</section>
+
+<section class="table-section">
+  <h2>Saved Records</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th><a href="{{ sort_link('requested_date') }}">Date{% if sort=='requested_date' %} {% if direction=='asc' %}▲{% else %}▼{% endif %}{% endif %}</a></th>
+          <th><a href="{{ sort_link('city') }}">City{% if sort=='city' %} {% if direction=='asc' %}▲{% else %}▼{% endif %}{% endif %}</a></th>
+          <th><a href="{{ sort_link('country') }}">Country{% if sort=='country' %} {% if direction=='asc' %}▲{% else %}▼{% endif %}{% endif %}</a></th>
+          <th><a href="{{ sort_link('temp_max_c') }}">T Max (°C){% if sort=='temp_max_c' %} {% if direction=='asc' %}▲{% else %}▼{% endif %}{% endif %}</a></th>
+          <th><a href="{{ sort_link('temp_min_c') }}">T Min (°C){% if sort=='temp_min_c' %} {% if direction=='asc' %}▲{% else %}▼{% endif %}{% endif %}</a></th>
+          <th><a href="{{ sort_link('precip_mm') }}">Precip (mm){% if sort=='precip_mm' %} {% if direction=='asc' %}▲{% else %}▼{% endif %}{% endif %}</a></th>
+          <th><a href="{{ sort_link('wind_max_kmh') }}">Wind Max (km/h){% if sort=='wind_max_kmh' %} {% if direction=='asc' %}▲{% else %}▼{% endif %}{% endif %}</a></th>
+          <th><a href="{{ sort_link('source') }}">Source{% if sort=='source' %} {% if direction=='asc' %}▲{% else %}▼{% endif %}{% endif %}</a></th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in records %}
+          <tr>
+            <td>{{ r.requested_date }}</td>
+            <td>{{ r.city }}</td>
+            <td>{{ r.country }}</td>
+            <td>{{ "%.1f"|format(r.temp_max_c) if r.temp_max_c is not none else "—" }}</td>
+            <td>{{ "%.1f"|format(r.temp_min_c) if r.temp_min_c is not none else "—" }}</td>
+            <td>{{ "%.1f"|format(r.precip_mm) if r.precip_mm is not none else "—" }}</td>
+            <td>{{ "%.1f"|format(r.wind_max_kmh) if r.wind_max_kmh is not none else "—" }}</td>
+            <td><span class="pill {{ r.source }}">{{ r.source }}</span></td>
+            <td>
+              <form method="post" action="{{ url_for('delete', record_id=r.id) }}" onsubmit="return confirm('Delete this record?')">
+                <button type="submit" class="danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+        {% else %}
+          <tr><td colspan="9" class="empty">No records yet. Add one above!</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
