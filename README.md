@@ -26,9 +26,3 @@ Pytest is configured to generate coverage:
 
 ## CI (GitHub Actions)
 A workflow at `.github/workflows/ci.yml` runs tests with coverage on pushes/PRs to `main` and uploads HTML/XML coverage artifacts.
-
-## Extending Ideas
-- Store region in DB (add column)
-- Pagination / CSV export
-- More metrics (humidity, clouds)
-- Auth (Flask-Login)

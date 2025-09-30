@@ -3,6 +3,7 @@ import pytest
 from app import create_app
 from models import db
 
+# Creates a Flask app with a temporary SQLite database for tests.
 @pytest.fixture()
 def app(tmp_path, monkeypatch):
     db_path = tmp_path / "test.db"
