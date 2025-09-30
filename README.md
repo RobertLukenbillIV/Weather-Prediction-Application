@@ -5,7 +5,7 @@ A tiny full-stack Python project: enter a **date, country, city** (optionally **
 ## Quickstart
 ```bash
 python -m venv .venv
-source .venv/bin/activate      # Windows: .venv\Scripts\activate
+.venv\Scripts\activate
 pip install -r requirements.txt
 flask --app app:create_app run --debug    # or: python app.py
 ```
@@ -17,6 +17,7 @@ Fill the optional **State/Province** field to narrow geocoding results. If multi
 ## Testing
 - Install dev deps: `pip install -r requirements-dev.txt`
 - Run tests: `pytest -q`
+
 
 ### Coverage reports
 Pytest is configured to generate coverage:
