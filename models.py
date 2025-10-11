@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -18,7 +18,7 @@ class WeatherRecord(db.Model):
 
     source = db.Column(db.String(32), nullable=False)  # "historical" or "forecast"
 
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, index=True)
+    created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(UTC), index=True)
 
     def __repr__(self):
         return f"<WeatherRecord {self.id} {self.city}, {self.country} {self.requested_date}>"

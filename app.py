@@ -176,6 +176,9 @@ def create_app():
         # Single match
         if len(candidates) == 1:
             match = candidates[0]
+            latitude = match["latitude"]
+            longitude = match["longitude"]
+            timezone_str = match["timezone"]
             daily = weather_api.fetch_weather_for_date(
                 city=city,
                 country=country,
@@ -211,7 +214,10 @@ def create_app():
     # Deletes the selected record.
     @app.route("/delete/<int:record_id>", methods=["POST"])
     def delete(record_id):
-        record = WeatherRecord.query.get_or_404(record_id)
+        record = db.session.get(WeatherRecord, record_id)
+        if record is None:
+            flash("Record not found.", "error")
+            return redirect(request.referrer or url_for("index"))
         db.session.delete(record)
         db.session.commit()
         flash("Record deleted.", "success")

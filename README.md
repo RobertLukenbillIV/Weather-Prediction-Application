@@ -5,9 +5,13 @@ A tiny full-stack Python project: enter a **date, country, city** (optionally **
 ## Quickstart
 ```bash
 python -m venv .venv
+# Linux/Mac:
+source .venv/bin/activate
+# Windows:
 .venv\Scripts\activate
+
 pip install -r requirements.txt
-flask --app app:create_app run --debug    # or: python app.py
+python app.py
 ```
 Open http://127.0.0.1:5000/
 
